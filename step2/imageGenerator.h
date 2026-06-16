@@ -14,7 +14,7 @@ class Image{
     Image(int c, int l);
 
     int getColumns();
-
+    
     int getLines();
 
     Pixel checkPixel(int c, int l);
@@ -23,7 +23,7 @@ class Image{
 
     void setImage(std::string link);
 
-    void createImage(std::string archive);
+    void createImage(std::string);
 
     ~Image();
 };

@@ -22,41 +22,30 @@ void Image::setPixel(Pixel p, int c, int l){
     *img[c + l*columns] = p;
 }
 void Image::setImage(std::string link){
-    std::ifstream file(link, std::ios::in);
+    std::ifstream file(link);
     std::string buffer;
-    std::getline(file, buffer);
+    file >> buffer;
+    buffer = "";
     //tipo de imagem
-    std::getline(file, buffer);
-    columns = std::stoi(buffer.substr(0, 0));
-    lines = std::stoi(buffer.substr(2, 2));
-    std::getline(file, buffer);
+    file >> columns >> lines;
+    file >> buffer;
+    buffer = "";
     //limite hexadecimal
-    std::getline(file, buffer);
-    int j = 0;
-    std::string numS;
-    for(int i = 0; i < buffer.size(); i++){
-        int rgb = 0;
-        if(i != 0 && (buffer[i] == ' ' && buffer[i-1])){
-            
-        }else if(buffer[i] == ' '){
-            if(rgb == 0){
-                img[j]->changeRed(std::stoi(numS));
-                numS = "";
-                rgb++;
-            }else if(rgb == 1){
-                img[j]->changeGreen(std::stoi(numS));
-                numS = "";
-                rgb++;
-            }else{
-                img[j]->changeBlue(std::stoi(numS));
-                numS = "";
-                rgb = 0;
-            }
+    int rgb = 0;
+    for(int j = 0; j < columns*lines; j++){
+        int numS = 0;
+        file >> numS;
+        if(rgb == 0){
+            img[j]->changeRed(numS);
+            rgb++;
+        }else if(rgb == 1){
+            img[j]->changeGreen(numS);
+            rgb++;
         }else{
-            numS += buffer[i];
+            img[j]->changeBlue(numS);
+            rgb = 0;
         }
     }
-
     file.close();
 }
 void Image::createImage(std::string archive){
@@ -65,7 +54,7 @@ void Image::createImage(std::string archive){
     file << columns << " " << lines << std::endl;
     file << "255" << std::endl;
     for(int i = 0; i < columns*lines; i++){
-        file << img[i]->getRed() << " " << img[i]->getGreen() << " " << img[i]->getBlue() << "  ";
+        file << img[i]->getRed() << " " << img[i]->getGreen() << " " << img[i]->getBlue() << std::endl;
     }
     file.close();
 }
