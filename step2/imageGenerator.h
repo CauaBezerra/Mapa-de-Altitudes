@@ -11,24 +11,21 @@ class Image{
     Pixel **img;
 
     public:
-    Image(int c, int l){
-        
-    }
-    Pixel checkPixel(int c, int l){
-        
-    }
-    void setPixel(Pixel p, int c, int l){
-        
-    }
-    void setImage(std::string link){
+    Image(int c, int l);
 
-    }
-    void createImage(){
-       
-    }
-    ~Image(){
-        delete img;
-    }
+    int getColumns();
+
+    int getLines();
+
+    Pixel checkPixel(int c, int l);
+
+    void setPixel(Pixel p, int c, int l);
+
+    void setImage(std::string link);
+
+    void createImage(std::string archive);
+
+    ~Image();
 };
 
 #endif
