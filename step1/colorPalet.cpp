@@ -4,6 +4,11 @@
 #include "pixel.h"
 #include "colorPalet.h"
 
+Pixel::Pixel(){
+    Red = 0;
+    Blue = 0;
+    Green = 0;
+};
 
 Pixel::Pixel(unsigned int r, unsigned int g, unsigned int b){
     if(r>255){
@@ -34,15 +39,31 @@ unsigned int Pixel::getGreen(){
 }
 
 void Pixel::changeRed(unsigned int newR){
-    Red = newR;
+    if(newR>255){
+        newR=255;
+    }
+    else{
+        Red = newR;
+    }
+    
 };
     
 void Pixel::changeBlue(unsigned int newB){
-    Blue = newB;
+    if(newB>255){
+        newB=255;
+    }
+    else{
+        Blue = newB;
+    }
 };
 
 void Pixel::changeGreen(unsigned int newG){
-    Green = newG;
+    if(newG>255){
+        newG=255;
+    }
+    else{
+        Green = newG;
+    }
 };
 
 //Palet 

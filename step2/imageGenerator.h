@@ -5,10 +5,8 @@
 
 class Image{
     int lines;
-    int currentLine;
     int columns;
-    int currentColumn;
-    Pixel **img;
+    Pixel *img;
 
     public:
     Image(int c, int l);

@@ -8,6 +8,7 @@ class Pixel{
     unsigned int Blue;
 
     public:
+    Pixel ();
     Pixel (unsigned int r, unsigned int g, unsigned int b);
 
     
