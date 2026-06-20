@@ -1,7 +1,14 @@
 #include "mapGenerator.cpp"
 
 int main(){
-    Map cleiton (1 , 2);
-    std::cout<<cleiton.getHeight(0, 1);
-    
+    Map cleiton (5 , 5);
+    cleiton.setMap("./step3/map_teste.txt");
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 5; j++){
+            std::cout << cleiton.getHeight(i, j) << " ";
+        }
+        std::cout << std::endl;
+    }
+    cleiton.createRandom(1, 100, 10);
+    cleiton.createMap("./step3/map_teste.txt");
 }

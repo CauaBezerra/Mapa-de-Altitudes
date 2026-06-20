@@ -19,9 +19,9 @@ class Image{
 
     void setPixel(Pixel p, int c, int l);
 
-    void setImage(std::string link);
+    void setImage(std::string archive);
 
-    void createImage(std::string);
+    void createImage(std::string archive);
 
     ~Image();
 };

@@ -1,11 +1,11 @@
 #include "./mapGenerator.h"
 
-Map::Map(int c, int l){
+Map::Map(int l, int c){
     columns = c;
     lines = l;
-    for(int i = 0; i < columns; i++){
+    for(int i = 0; i < lines; i++){
         std::vector <int> line;
-        for(int j = 0; j < lines; j++){
+        for(int j = 0; j < columns; j++){
             line.push_back(0);
         }
         map.push_back(line);
@@ -17,8 +17,8 @@ int Map::getColumns(){
 int Map::getLines(){
     return lines;
 }
-int Map::getHeight(int c, int l){
-    return map[c][l];
+int Map::getHeight(int l, int c){
+    return map[l][c];
 }
 void Map::createRandom(int min, int max, int var){
     srand(time(0));
@@ -26,72 +26,104 @@ void Map::createRandom(int min, int max, int var){
     map[0][columns-1] = (rand() % (max - min + 1)) + min;
     map[lines-1][0] = (rand() % (max - min + 1)) + min;
     map[lines-1][columns-1] = (rand() % (max - min + 1)) + min;
+    diamondSquare(0, 0, 0, columns-1, lines-1, 0, lines-1, columns-1, max, min, var);
 }
 void Map::setMap(std::string archive){
-
+    std::ifstream file(archive);
+    file >> lines;
+    file >> columns;
+    for(int i = 0; i < lines; i++){
+        std::vector <int> line;
+        for(int j = 0; j < columns; j++){
+            file >> map[i][j];
+        }
+    }
 }
 void Map::createMap(std::string archive){
-
+    std::ofstream file(archive);
+    for(int i = 0; i < lines; i++){
+        for(int j = 0; j < columns; j++){
+            file << map[i][j] << " ";
+        }
+        file << std::endl;
+    }
 }
 
-void Map::dimondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, bool square, int max, int min, int var){
-    if(square){
-        int medx = px2;
-        int medy = py1;
-        int medh;
-        if(px1 < 0){
-            medh = (map[px2][py2] + map[px3][py3] + map[px4][py4])/3;
-        }else if(px2 < 0){
-            medh = (map[px1][py1] + map[px3][py3] + map[px4][py4])/3;
-        }else if(px3 < 0){
-            medh = (map[px1][py1] + map[px2][py2] + map[px4][py4])/3;
-        }else if(px4 < 0){
-            medh = (map[px1][py1] + map[px2][py2] + map[px3][py3])/3;
+void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, int c4, int max, int min, int var){
+    bool stop = true;
+    int medl = (l3 - l1)/2 + l1;
+    int medc = (c2 - c1)/2 + c1;
+    int medh = 0;
+    if(map[medl][medc] == 0){
+        int medh = (map[l1][c1] + map[l2][c2] + map[l3][c3] + map[l4][c4])/4;
+        map[medl][medc] = (rand()%(2*var+1))+(medh-var);
+        if(map[medl][medc] < min){
+            map[medl][medc] = min;
+        }else if(map[medl][medc] > max){
+            map[medl][medc] = max;
+        }
+        stop = false;
+    }
+    if(map[medl][c1] == 0){
+        if(c1 == 0){
+            medh = (map[l1][c1] + map[medl][medc] + map[l3][c3])/3;
         }else{
-            medh = (map[px1][py1] + map[px2][py2] + map[px3][py3] + map[px4][py4])/4;
+            medh = (map[medl][medc-(c3-c1)] + map[l1][c1] + map[medl][medc] + map[l3][c3])/4;
         }
-        if(map[medx][medy] == 0){
-            map[medx][medy] = (rand()%(2*var+1))+(medh-var);
-            if(map[medx][medy] < min){
-                map[medx][medy] = min;
-            }else if(map[medx][medy] > max){
-                map[medx][medy] = max;
-            }
-            if(px1 < 0){
-                dimondSquare(px2, py2, px3, py2, medx, medy, px3, py3, true, max, min, var);
-            }
+        map[medl][c1] = (rand()%(2*var+1))+(medh-var);
+        if(map[medl][c1] < min){
+            map[medl][c1] = min;
+        }else if(map[c1][medc] > max){
+            map[medl][c1] = max;
         }
-    }else{
-        int medx = (px2 - px1)/2 + px1;
-        int medy = (py3 - py1)/2 + py1;
-        int medh = (map[px1][py1] + map[px2][py2] + map[px3][py3] + map[px4][py4])/4;
-        if(map[medx][medy] == 0){
-            map[medx][medy] = (rand()%(2*var+1))+(medh-var);
-            if(map[medx][medy] < min){
-                map[medx][medy] = min;
-            }else if(map[medx][medy] > max){
-                map[medx][medy] = max;
-            }
-            if(px1 == 0){
-                dimondSquare(-1, -1, px1, py1, medx, medy, px3, py3, true, max, min, var);
-            }else{
-                dimondSquare(medx-(px2-px1), medy, px1, py1, medx, medy, px3, py3, true, max, min, var);
-            }
-            if(py1 == 0){
-                dimondSquare(px1, py1, -1, -1, px2, py2, medx, medy, true, max, min, var);
-            }else{
-                dimondSquare(px1, py1, medx, medy-(py3-py1), px2, py2, medx, medy, true, max, min, var);
-            }
-            if(px1 == columns-1){
-                dimondSquare(medx, medy, px2, py2, -1, -1, px4, py4, true, max, min, var);
-            }else{
-                dimondSquare(medx, medy, px2, py2, medx+(px2-px1), medy, px4, py4, true, max, min, var);
-            }
-            if(py1 == lines-1){
-                dimondSquare(px2, py2, medx, medy, px4, py4, -1, -1, true, max, min, var);
-            }else{
-                dimondSquare(px2, py2, medx, medy, px4, py4, medx, medy-(py3-py1), true, max, min, var);
-            }
+        stop = false;
+    }
+    if(map[l1][medc] == 0){
+        if(l1 == 0){
+            medh = (map[l1][c1] + map[l2][c2] + map[medl][medc])/3;
+        }else{
+            medh = (map[l1][c1] + map[medl-(l2-l1)][medc] + map[l2][c2] + map[medl][medc])/4;
         }
+        map[l1][medc] = (rand()%(2*var+1))+(medh-var);
+        if(map[l1][medc] < min){
+            map[l1][medc] = min;
+        }else if(map[l1][medc] > max){
+            map[l1][medc] = max;
+        }
+        stop = false;
+    }
+    if(map[medl][c2] == 0){
+        if(c4 == columns-1){
+            medh = (map[medl][medc] + map[l2][c2] + map[l4][c4])/3;
+        }else{
+            medh = (map[medl][medc] + map[l2][c2] + map[medl][medc+(c4-c1)] + map[l4][c4])/4;
+        }
+        map[medl][c2] = (rand()%(2*var+1))+(medh-var);
+        if(map[medl][c2] < min){
+            map[medl][c2] = min;
+        }else if(map[c2][medc] > max){
+            map[medl][c2] = max;
+        }
+        stop = false;
+    }
+    if(map[l3][medc] == 0){
+        if(l4 == lines-1){
+            medh = (map[l3][c3] + map[medl][medc] + map[l4][c4])/3;
+        }else{
+            medh = (map[l3][c3] + map[medl][medc] + map[l4][c4] + map[medl+(l2-l1)][medc])/4;
+        }
+        map[l3][medc] = (rand()%(2*var+1))+(medh-var);
+        if(map[l3][medc] < min){
+            map[l3][medc] = min;
+        }else if(map[l3][medc] > max){
+            map[l3][medc] = max;
+        }
+        stop = false;
+    }
+    if(!stop){
+        diamondSquare(l1, c1, l1, medc, medl, c1, medl, medc, max, min, var);
+        diamondSquare(l2, medc, l2, c2, medl, medc, medl, c2, max, min, var);
+        diamondSquare(medl, c3, medl, medc, l3, c3, l3, medc, max, min, var);
+        diamondSquare(medl, medc, medl, c4, l4, medc, c4, c4, max, min, var);
     }
 }

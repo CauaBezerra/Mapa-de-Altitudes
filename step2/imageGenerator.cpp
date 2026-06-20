@@ -18,8 +18,8 @@ Pixel Image::checkPixel(int c, int l){
 void Image::setPixel(Pixel p, int c, int l){
     img[c + l*columns] = p;
 }
-void Image::setImage(std::string link){
-    std::ifstream file(link);
+void Image::setImage(std::string archive){
+    std::ifstream file(archive);
     std::string buffer;
     file >> buffer;
     buffer = "";

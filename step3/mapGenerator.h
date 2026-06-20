@@ -11,13 +11,13 @@ class Map{
 
     public:
 
-    Map(int c, int l);
+    Map(int l, int c);
 
     int getColumns();
 
     int getLines();
 
-    int getHeight(int c, int l);
+    int getHeight(int l, int c);
 
     void createRandom(int min, int max, int var);
 
@@ -25,7 +25,7 @@ class Map{
 
     void createMap(std::string archive);
 
-    void dimondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, bool square, int max, int min, int var);
+    void diamondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, int max, int min, int var);
 
 };
 
