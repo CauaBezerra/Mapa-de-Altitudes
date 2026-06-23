@@ -4,6 +4,9 @@
 #include "pixel.h"
 #include "colorPalet.h"
 
+#ifndef PALETCPP
+#define PALETCPP
+
 Pixel::Pixel(){
     Red = 0;
     Blue = 0;
@@ -107,3 +110,5 @@ Pixel Palet::getPixel(unsigned int i){
     }
     return paletVector[i];
 };
+
+#endif

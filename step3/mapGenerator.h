@@ -5,13 +5,15 @@
 #define MAPGEN
 
 class Map{
-    std::vector <std::vector<int>> map;
+    std::vector <std::vector<int>> mapH;
     int columns;
     int lines;
+    int max;
+    int min;
 
     public:
 
-    Map(int l, int c);
+    Map(int l, int c, int mx, int mn);
 
     int getColumns();
 
@@ -21,12 +23,13 @@ class Map{
 
     void createRandom(int min, int max, int var);
 
-    void setMap(std::string archive);
+    void setHeightMap(std::string archive);
 
-    void createMap(std::string archive);
+    void createHeightMap(std::string archive);
 
-    void diamondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, int max, int min, int var);
+    void diamondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, int var);
 
+    void createMap (std::string paletArchive, std::string outPutArchive);
 };
 
 #endif
