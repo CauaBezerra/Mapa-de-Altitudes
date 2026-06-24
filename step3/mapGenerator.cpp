@@ -23,7 +23,7 @@ int Map::getLines(){
 int Map::getHeight(int l, int c){
     return mapH[l][c];
 }
-void Map::createRandom(int min, int max, int var){
+void Map::createRandom(int var){
     srand(time(0));
     mapH[0][0] = (rand() % (max - min + 1)) + min;
     mapH[0][columns-1] = (rand() % (max - min + 1)) + min;
@@ -60,7 +60,7 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
     int medh = 0;
     if(mapH[medl][medc] == 0){
         int medh = (mapH[l1][c1] + mapH[l2][c2] + mapH[l3][c3] + mapH[l4][c4])/4;
-        mapH[medl][medc] = (rand()%(2*var+1))+(medh-var);
+        mapH[medl][medc] = (2*(rand()%(var+1)))+(medh-var);
         if(mapH[medl][medc] < min){
             mapH[medl][medc] = min;
         }else if(mapH[medl][medc] > max){
@@ -74,10 +74,10 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         }else{
             medh = (mapH[medl][medc-(c3-c1)] + mapH[l1][c1] + mapH[medl][medc] + mapH[l3][c3])/4;
         }
-        mapH[medl][c1] = (rand()%(2*var+1))+(medh-var);
+        mapH[medl][c1] = (2*(rand()%(var+1)))+(medh-var);
         if(mapH[medl][c1] < min){
             mapH[medl][c1] = min;
-        }else if(mapH[c1][medc] > max){
+        }else if(mapH[medl][c1] > max){
             mapH[medl][c1] = max;
         }
         stop = false;
@@ -88,7 +88,7 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         }else{
             medh = (mapH[l1][c1] + mapH[medl-(l2-l1)][medc] + mapH[l2][c2] + mapH[medl][medc])/4;
         }
-        mapH[l1][medc] = (rand()%(2*var+1))+(medh-var);
+        mapH[l1][medc] = (2*(rand()%(var+1)))+(medh-var);
         if(mapH[l1][medc] < min){
             mapH[l1][medc] = min;
         }else if(mapH[l1][medc] > max){
@@ -102,10 +102,10 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         }else{
             medh = (mapH[medl][medc] + mapH[l2][c2] + mapH[medl][medc+(c4-c1)] + mapH[l4][c4])/4;
         }
-        mapH[medl][c2] = (rand()%(2*var+1))+(medh-var);
+        mapH[medl][c2] = (2*(rand()%(var+1)))+(medh-var);
         if(mapH[medl][c2] < min){
             mapH[medl][c2] = min;
-        }else if(mapH[c2][medc] > max){
+        }else if(mapH[medl][c2] > max){
             mapH[medl][c2] = max;
         }
         stop = false;
@@ -116,7 +116,7 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         }else{
             medh = (mapH[l3][c3] + mapH[medl][medc] + mapH[l4][c4] + mapH[medl+(l2-l1)][medc])/4;
         }
-        mapH[l3][medc] = (rand()%(2*var+1))+(medh-var);
+        mapH[l3][medc] = (2*(rand()%(var+1)))+(medh-var);
         if(mapH[l3][medc] < min){
             mapH[l3][medc] = min;
         }else if(mapH[l3][medc] > max){

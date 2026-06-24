@@ -21,7 +21,7 @@ class Map{
 
     int getHeight(int l, int c);
 
-    void createRandom(int min, int max, int var);
+    void createRandom(int var);
 
     void setHeightMap(std::string archive);
 

@@ -9,7 +9,6 @@ int main(){
     }
     std::cin>>c>>l>>mx>>mn;
     Map finalMap(l, c, mx, mn);
-    finalMap.createRandom(mn, mx, (int)1*(mx-mn)/100);
     finalMap.createMap("./step4/paletInPut.txt", "./step4/mapOutPut.ppm");
     finalMap.createHeightMap("./mapH.txt");
     std::cout<<"Your map was created in step4 folder in mapOutPut.ppm file"<<std::endl;

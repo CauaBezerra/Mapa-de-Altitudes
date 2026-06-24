@@ -4,6 +4,9 @@
 void Map::createMap(std::string paletArchive, std::string outPutArchive){
     Palet palet(paletArchive);
     int colorVar = (max-min)/palet.pixelNum();
+
+    createRandom(colorVar*((10*palet.pixelNum())/100)+1);
+
     Image map(columns, lines);
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
