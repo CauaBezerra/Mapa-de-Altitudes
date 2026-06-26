@@ -5,12 +5,20 @@ void Map::createMap(std::string paletArchive, std::string outPutArchive){
     Palet palet(paletArchive);
     int colorVar = (max-min)/palet.pixelNum();
 
-    createRandom(colorVar*((10*palet.pixelNum())/100)+1);
+    if(colorVar==0){
+        colorVar=1;
+    }
+
+    createRandom(colorVar*5);
 
     Image map(columns, lines);
     for(int i = 0; i < lines; i++){
         for(int j = 0; j < columns; j++){
-            map.setPixel(palet.getPixel(mapH[i][j]/colorVar), j, i);
+            if((mapH[i][j]%(max-min))/colorVar < palet.pixelNum()){
+                map.setPixel(palet.getPixel((mapH[i][j]%(max-min))/colorVar), j, i);
+            }else{
+                map.setPixel(palet.getPixel(palet.pixelNum()-1), j, i);
+            }
         }
     }
 

@@ -124,7 +124,7 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         }
         stop = false;
     }
-    if(!(medc == c1 || medc == c2 || medc == c3)){
+    if(!(stop)){
         diamondSquare(l1, c1, l1, medc, medl, c1, medl, medc, var);
         diamondSquare(l2, medc, l2, c2, medl, medc, medl, c2, var);
         diamondSquare(medl, c3, medl, medc, l3, c3, l3, medc, var);
