@@ -1,10 +1,10 @@
 #include "./mapGenerator.h"
 
-Map::Map(int l, int c, int mx, int mn){
+Map::Map(int l, int c, int varh){
     columns = c;
     lines = l;
-    max = mx;
-    min = mn;
+    min = 1;
+    max = 1 + varh;
     
     for(int i = 0; i < lines; i++){
         std::vector <int> line;

@@ -1,7 +1,7 @@
 #include "mapGenerator.cpp"
 
 int main(){
-    Map cleiton(5 , 5, 101, 1);
+    Map cleiton(5 , 5, 100);
     cleiton.setHeightMap("./step3/map_teste.txt");
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
@@ -9,6 +9,6 @@ int main(){
         }
         std::cout << std::endl;
     }
-    cleiton.createRandom(1, 100, 10);
+    cleiton.createRandom(10);
     cleiton.createHeightMap("./step3/map_teste.txt");
 }

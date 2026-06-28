@@ -13,7 +13,7 @@ class Map{
 
     public:
 
-    Map(int l, int c, int mx, int mn);
+    Map(int l, int c, int varh);
 
     int getColumns();
 
@@ -29,7 +29,7 @@ class Map{
 
     void diamondSquare(int px1, int py1, int px2, int py2, int px3, int py3, int px4, int py4, int var);
 
-    void createMap (std::string paletArchive, std::string outPutArchive);
+    void createMap (std::string paletArchive, std::string outPutArchive, int var);
 };
 
 #endif
