@@ -26,9 +26,24 @@ int Map::getHeight(int l, int c){
 void Map::createRandom(int var){
     srand(time(0));
     mapH[0][0] = (rand() % (max - min + 1)) + min;
-    mapH[0][columns-1] = (rand() % (max - min + 1)) + min;
-    mapH[lines-1][0] = (rand() % (max - min + 1)) + min;
-    mapH[lines-1][columns-1] = (rand() % (max - min + 1)) + min;
+    mapH[0][columns-1] = (rand() % (2*var + 1)) - var + mapH[0][0];
+    if(mapH[0][columns-1] < min){
+        mapH[0][columns-1] = min;
+    }else if(mapH[0][columns-1] > max){
+        mapH[0][columns-1] = max;
+    }
+    mapH[lines-1][0] = (rand() % (2*var + 1)) - var + mapH[0][0];
+    if(mapH[lines-1][0] < min){
+        mapH[lines-1][0] = min;
+    }else if(mapH[lines-1][0] > max){
+        mapH[lines-1][0] = max;
+    }
+    mapH[lines-1][columns-1] = (rand() % (2*var + 1)) - var + mapH[0][0];
+    if(mapH[lines-1][0] < min){
+        mapH[lines-1][0] = min;
+    }else if(mapH[lines-1][0] > max){
+        mapH[lines-1][0] = max;
+    }
     diamondSquare(0, 0, 0, columns-1, lines-1, 0, lines-1, columns-1, var);
 }
 void Map::setHeightMap(std::string archive){
@@ -54,6 +69,9 @@ void Map::createHeightMap(std::string archive){
 }
 
 void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, int c4, int var){
+    if(var < 0){
+        var = 1;
+    }
     bool stop = true;
     int medl = (l3 - l1)/2 + l1;
     int medc = (c2 - c1)/2 + c1;
@@ -125,9 +143,9 @@ void Map::diamondSquare(int l1, int c1, int l2, int c2, int l3, int c3, int l4, 
         stop = false;
     }
     if(!(stop)){
-        diamondSquare(l1, c1, l1, medc, medl, c1, medl, medc, var);
-        diamondSquare(l2, medc, l2, c2, medl, medc, medl, c2, var);
-        diamondSquare(medl, c3, medl, medc, l3, c3, l3, medc, var);
-        diamondSquare(medl, medc, medl, c4, l4, medc, l4, c4, var);
+        diamondSquare(l1, c1, l1, medc, medl, c1, medl, medc, var - var/4);
+        diamondSquare(l2, medc, l2, c2, medl, medc, medl, c2, var - var/4);
+        diamondSquare(medl, c3, medl, medc, l3, c3, l3, medc, var - var/4);
+        diamondSquare(medl, medc, medl, c4, l4, medc, l4, c4, var - var/4);
     }
 }
